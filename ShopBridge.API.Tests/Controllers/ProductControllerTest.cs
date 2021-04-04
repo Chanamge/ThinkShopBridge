@@ -29,35 +29,6 @@ namespace ShopBridge.API.Tests.Controllers
             Assert.AreEqual("value2", result.ElementAt(1));
         }
 
-        //[TestMethod]
-        //public void GetProducts()
-        //{
-        //    var response = _controller.Get();
-
-        //    var responseData = response.Result.Content.ReadAsStringAsync();
-        //    var result = JsonConvert.DeserializeObject<List<Product>>(responseData.ToString());
-
-        //    // Assert
-        //    Assert.IsNotNull(result);
-        //    Console.WriteLine(result);
-        //    Assert.AreEqual("value1", result.ElementAt(0));
-        //    Assert.AreEqual("value2", result.ElementAt(1));
-        //}
-
-        //[TestMethod]
-        //public async Task GetAllProductsAsync_ShouldReturnAllProducts()
-        //{
-        //    var response = await _controller.Get();
-
-        //    var responseData = response.Content.ReadAsStringAsync();
-        //    var testProducts = JsonConvert.DeserializeObject<List<Product>>(responseData.ToString());
-
-        //    var controller = new ProductController(testProducts);
-
-        //    var result = await controller.GetAllProductsAsync() as List<Product>;
-        //    Assert.AreEqual(testProducts.Count, result.Count);
-        //}
-
 
         [TestMethod]
         public async void GetById()
