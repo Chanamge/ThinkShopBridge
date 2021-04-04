@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Http.Results;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using ShopBridge.API.Controllers;
@@ -14,56 +17,64 @@ namespace ShopBridge.API.Tests.Controllers
     {
         ProductController _controller = new ProductController();
 
+        //[TestMethod]
+        //public void Get()
+        //{
+        //    var response = _controller.Get();
+
+        //    var responseData = response.Result.Content.ToString();
+        //    Console.WriteLine(responseData);
+        //    var result = JsonConvert.DeserializeObject<List<Product>>(responseData.ToString());
+
+        //    // Assert
+        //    Assert.IsNotNull(result);
+        //    Console.WriteLine(result);
+        //    Assert.AreEqual("value1", result.ElementAt(0));
+        //    Assert.AreEqual("value2", result.ElementAt(1));
+        //}
+
         [TestMethod]
-        public async void Get()
+        public void GetProducts_ShouldReturnProductList()
         {
-            var response = await _controller.Get();
-
-            var responseData = response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<List<Product>>(responseData.ToString());
-
-            // Assert
+            var result = _controller.Get();
             Assert.IsNotNull(result);
-            Console.WriteLine(result);
-            Assert.AreEqual("value1", result.ElementAt(0));
-            Assert.AreEqual("value2", result.ElementAt(1));
-        }
-
-
-        [TestMethod]
-        public async void GetById()
-        {
-            var result = await _controller.Get(5);
-
-            // Assert
-            Assert.AreEqual("value", result);
         }
 
         [TestMethod]
-        public async void Post()
+        public void PostProduct_ShouldCreateProduct()
         {
-            // Act
-            //await _controller.Post("value");
+            var product = GetDemoProduct();
 
-            // Assert
+            var result = _controller.Post(product);
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public async void Put()
+        public void GetProduct_ShouldReturnProduct()
         {
-            // Act
-            //_controller.Put(5, "value");
-
-            // Assert
+            var result = _controller.Get(2);
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public async void Delete()
+        public void PutProduct_ShouldUpdateProduct()
         {
-            // Act
-            //_controller.Delete(5);
+            var product = GetDemoProduct();
 
-            // Assert
+            var result = _controller.Put(2, product);
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void DeleteProduct_ShouldDeleteProduct()
+        {
+            var result = _controller.Delete(2);
+            Assert.IsNotNull(result);
+        }
+
+        Product GetDemoProduct()
+        {
+            return new Product() { Id = 3, Name = "Demo name", Description = "Demo Description", Price = 5, Type = "Demo Type" };
         }
     }
 }
