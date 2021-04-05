@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PagingParameterModel.cs" />
     <Compile Include="Product.cs">
       <DependentUpon>ShopBridgeEntities.tt</DependentUpon>
     </Compile>

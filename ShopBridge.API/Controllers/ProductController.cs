@@ -49,19 +49,24 @@ namespace ShopBridge.API.Controllers
             }
             catch (Exception ex)
             {
-                dict.Add("Message", ex.Message);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
 
         [HttpGet]
-        public async Task<HttpResponseMessage> Get()
+        public async Task<HttpResponseMessage> Get(int pageNumber, int pageSize)
         {
             Dictionary<string, string> dict = new Dictionary<string, string>();
+
             try
             {
-                var products = _productRepository.GetProducts();
-                if (products == null || products.Count() == 0)
+                PagingParameterModel pagingModel = new PagingParameterModel()
+                {
+                    pageNumber = pageNumber,
+                    pageSize = pageSize
+                };
+                var products = _productRepository.GetProducts(pagingModel);
+                if (products == null || products.Data.Count() == 0)
                 {
                     var showmessage = "Products not found.";
                     dict.Add("Message", showmessage);
@@ -72,8 +77,7 @@ namespace ShopBridge.API.Controllers
             }
             catch (Exception ex)
             {
-                dict.Add("Message", ex.Message);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
 
@@ -94,8 +98,7 @@ namespace ShopBridge.API.Controllers
             }
             catch (Exception ex)
             {
-                dict.Add("Message", ex.Message);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
 
@@ -107,8 +110,6 @@ namespace ShopBridge.API.Controllers
             try
             {
                 Product exi_product = _productRepository.GetProductByID(id);
-                //foreach(var prop in exi_product.GetType().GetProperties())
-                //    prop.SetValue(exi_product, product.GetType().GetProperty(prop.Name))
 
                 foreach (PropertyInfo property in typeof(Product).GetProperties().Where(p => p.CanWrite && p.Name != "Id"))
                 {
@@ -133,8 +134,7 @@ namespace ShopBridge.API.Controllers
             }
             catch (Exception ex)
             {
-                dict.Add("Message", ex.Message);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
 
@@ -163,8 +163,7 @@ namespace ShopBridge.API.Controllers
             }
             catch (Exception ex)
             {
-                dict.Add("Message", ex.Message);
-                return Request.CreateResponse(HttpStatusCode.BadRequest, dict);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
         }
 

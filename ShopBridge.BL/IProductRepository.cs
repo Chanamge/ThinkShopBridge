@@ -6,7 +6,7 @@ namespace ShopBridge.BL
 {
     public interface IProductRepository : IDisposable
     {
-        IEnumerable<Product> GetProducts();
+        PagedResponse<IEnumerable<Product>> GetProducts(PagingParameterModel pagingparametermodel);
         Product GetProductByID(int id);
         void InsertProduct(Product product);
         void DeleteProduct(int id);
